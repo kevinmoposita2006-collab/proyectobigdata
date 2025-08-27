@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart360 – Prevención, Control y Resultados</title>
+  <meta name="description" content="Tecnología y Big Data aplicados a la prevención de lesiones deportivas, reducción de peso y venta de relojes inteligentes. Proyecto académico + vitrina de servicios."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b0f14;            /* fondo principal */
+      --bg-soft: #111824;       /* tarjetas oscuras */
+      --text: #e8eef6;          /* texto principal */
+      --muted: #b3c0d1;         /* texto suave */
+      --brand: #38bdf8;         /* acento azul */
+      --brand-2:#22d3ee;        /* acento cian */
+      --accent:#a78bfa;         /* acento morado */
+      --ok:#22c55e;             /* verde */
+      --warn:#f59e0b;           /* amarillo */
+      --danger:#ef4444;         /* rojo */
+      --card-radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --maxw: 1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial; color:var(--text); background: radial-gradient(1200px 600px at 80% -10%, rgba(56,189,248,.12), transparent 60%), radial-gradient(900px 500px at 10% -10%, rgba(167,139,250,.12), transparent 60%), var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:var(--maxw); margin-inline:auto; padding: 0 20px}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; background: rgba(11,15,20,.7); backdrop-filter: saturate(180%) blur(10px); border-bottom: 1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
+    .logo{width:38px; height:38px; border-radius:12px; background: linear-gradient(135deg, var(--brand), var(--accent)); display:grid; place-items:center; color:#00131a; font-weight:900}
+    .navlinks{display:flex; gap:18px}
+    .navlinks a{padding:8px 12px; border-radius:10px; color:var(--muted)}
+    .navlinks a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .mobile-btn{display:none}
+
+    /* Hero */
+    .hero{padding:84px 0 40px; position:relative}
+    .hero-grid{display:grid; grid-template-columns: 1.15fr .85fr; gap:40px; align-items:center}
+    .eyebrow{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border:1px solid rgba(255,255,255,.12); color:var(--brand-2); border-radius:999px; font-size:12px}
+    .title{font-size: clamp(28px, 4vw + 8px, 54px); line-height:1.06; margin:16px 0}
+    .subtitle{color:var(--muted); font-size: clamp(14px, 1.1vw + 10px, 18px)}
+    .cta-row{display:flex; gap:12px; margin-top:22px}
+    .btn{padding:12px 18px; border-radius:12px; font-weight:600; border:1px solid rgba(255,255,255,.12); display:inline-flex; align-items:center; gap:10px; transition:.2s}
+    .btn.primary{background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#00131a; border:none}
+    .btn.soft{background:rgba(255,255,255,.04)}
+    .btn:hover{transform: translateY(-1px)}
+
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.1); border-radius:var(--card-radius); padding:18px; box-shadow:var(--shadow)}
+    .chip{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(56,189,248,.15); color:#cff0ff; margin-bottom:10px}
+
+    /* Sections */
+    section{padding:64px 0}
+    h2.section-title{font-size: clamp(22px, 3.2vw + 8px, 34px); margin:0 0 8px}
+    p.section-sub{color:var(--muted); margin-top:0}
+
+    .grid-3{display:grid; grid-template-columns: repeat(3,1fr); gap:18px}
+    .grid-2{display:grid; grid-template-columns: repeat(2,1fr); gap:22px}
+    .card{background:var(--bg-soft); border:1px solid rgba(255,255,255,.06); border-radius:var(--card-radius); padding:20px; box-shadow:var(--shadow)}
+    .card h3{margin-top:0}
+
+    .feature{display:flex; gap:14px; align-items:flex-start}
+    .icon{width:34px; height:34px; border-radius:10px; display:grid; place-items:center; background:rgba(56,189,248,.16); color:#bfeaff; flex:0 0 34px}
+    .icon.purple{background:rgba(167,139,250,.16); color:#e6ddff}
+    .icon.green{background:rgba(34,197,94,.16); color:#d2ffe1}
+
+    .list{display:grid; gap:10px; margin:0; padding-left:0}
+    .list li{list-style:none; display:flex; gap:10px; align-items:flex-start}
+    .list li .check{color:var(--ok)}
+
+    .pills{display:flex; flex-wrap:wrap; gap:8px}
+    .pill{font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:var(--muted)}
+
+    /* Pricing/Pack */
+    .pricing{display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+    .price{font-size:28px; font-weight:800}
+    .strike{color: #9fb3c8; text-decoration: line-through; font-weight:500; margin-left:8px; font-size:16px}
+
+    /* Big Data viz */
+    .viz{background:linear-gradient(180deg, rgba(56,189,248,.12), rgba(167,139,250,.10)); border:1px solid rgba(255,255,255,.1); border-radius:var(--card-radius); padding:20px}
+    canvas{width:100%; height:320px}
+
+    /* Testimonials */
+    .testi{display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+    .testi .quote{font-style:italic; color:var(--text)}
+    .stars{color:#ffd56b}
+
+    /* Contact */
+    form{display:grid; gap:12px}
+    input, textarea{background:#0f1520; color:var(--text); border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:12px; outline:none}
+    input:focus, textarea:focus{border-color: var(--brand)}
+
+    /* Footer */
+    footer{padding:36px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.06)}
+
+    /* Floating WhatsApp */
+    .whatsapp{position:fixed; right:18px; bottom:18px; width:58px; height:58px; border-radius:50%; background:#25D366; display:grid; place-items:center; color:#012e12; font-weight:900; box-shadow:0 10px 20px rgba(0,0,0,.35); z-index:60}
+
+    /* Utilities */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    .mt-8{margin-top:8px}
+    .mt-16{margin-top:16px}
+    .mt-24{margin-top:24px}
+    .mt-32{margin-top:32px}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns:1fr}
+      .navlinks{display:none}
+      .mobile-btn{display:inline-flex}
+    }
+    @media (max-width: 720px){
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#inicio">
+      <div class="logo">SH</div>
+      <div>
+        Smart360<br>
+        <small class="muted">Prevención · Control · Resultados</small>
+      </div>
+    </a>
+    <nav class="navlinks" aria-label="Principal">
+      <a href="#relojes">Relojes</a>
+      <a href="#prevencion">Prevención</a>
+      <a href="#peso">Reducción de peso</a>
+      <a href="#bigdata">Big Data</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="mobile-btn btn soft" id="openMenu" aria-label="Abrir menú">☰</button>
+  </div>
+</header>
+
+<main id="inicio" class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Salud inteligente · Deporte seguro</span>
+      <h1 class="title">Tecnología y datos al servicio de tu salud deportiva</h1>
+      <p class="subtitle">Mide tu rendimiento, previene lesiones y mejora tu bienestar con <strong>smartwatches</strong>, programas de <strong>prevención</strong> y planes de <strong>reducción de peso</strong> con <em>seguimiento real</em>.</p>
+      <div class="cta-row">
+        <a href="#relojes" class="btn primary">Descubre cómo funciona</a>
+        <a href="#contacto" class="btn soft">Consulta rápida</a>
+      </div>
+      <div class="pills mt-16">
+        <span class="pill">Frecuencia cardiaca</span>
+        <span class="pill">VO₂ máx</span>
+        <span class="pill">Sueño</span>
+        <span class="pill">GPS</span>
+        <span class="pill">Alertas de fatiga</span>
+      </div>
+    </div>
+    <div>
+      <div class="hero-card">
+        <div class="chip">Demo en vivo · Panel de progreso</div>
+        <img src="img.jpg" alt="Deportista con smartwatch" style="border-radius:14px; border:1px solid rgba(255,255,255,.12)">
+        <p class="muted mt-16"> Los dispositivos capturan datos biométricos y de movimiento en tiempo real para análisis con Big Data.</p>
+        <p class="muted mt-16"> </p>
+     
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Relojes Inteligentes -->
+<section id="relojes">
+  <div class="container">
+    <h2 class="section-title">Relojes Inteligentes</h2>
+    <p class="section-sub">Más que accesorios: herramientas científicas para medir tu rendimiento y prevenir lesiones.</p>
+
+    <div class="grid-3 mt-24">
+      <article class="card">
+        <h3>Funciones clave</h3>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> Ritmo cardiaco, HRV y VO₂ máx.</li>
+          <li><span class="check">✔</span> Acelerómetro / giroscopio para detectar giros bruscos.</li>
+          <li><span class="check">✔</span> Monitoreo del sueño y alertas de fatiga.</li>
+          <li><span class="check">✔</span> Detección de caídas y alertas de emergencia.</li>
+          <li><span class="check">✔</span> GPS, calorías y gasto energético.</li>
+          <img src="img1.jpg" alt="reloj para calcular la presion"  style="border-radius:14px; border:1px solid rgba(255,255,255,.12)">
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Beneficios prácticos</h3>
+        <div class="feature mt-16">
+          <div class="icon">⏱</div>
+          <div>
+            <strong>Prevención proactiva</strong>
+            <p class="muted mt-8">Datos de carga, fatiga y recuperación para evitar sobreentrenamiento.</p>
+          </div>
+        </div>
+        <div class="feature mt-16">
+          <div class="icon purple">💤</div>
+          <div>
+            <strong>Sueño = rendimiento</strong>
+            <p class="muted mt-8">Déficit de sueño incrementa el riesgo de lesiones musculoesqueléticas.</p>
+          </div>
+        </div>
+        <div class="feature mt-16">
+          <div class="icon green">🧭</div>
+          <div>
+            <strong>Contexto real</strong>
+            <p class="muted mt-8">GPS, desnivel y superficie: variables clave para tobillos y rodillas.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Packs recomendados</h3>
+        <div class="pricing mt-16">
+          <div class="card" style="background:#0f1520">
+            <strong>Starter · Seguimiento básico</strong>
+            <div class="price mt-8">$79 <span class="strike">$99</span></div>
+            <ul class="list mt-16">
+              <img src="img7.jpg" alt="" width="150" height="140">
+              <li><span class="check">✔</span> Reloj básico con HR + pasos</li>
+              <li><span class="check">✔</span> Guía digital de prevención</li>
+              <li><span class="check">✔</span> Soporte por WhatsApp</li>
+            </ul>
+            <a class="btn primary mt-16" href="#contacto">Quiero este</a>
+          </div>
+          <div class="card" style="background:#0f1520">
+            <strong>Pro · Control total</strong>
+            <div class="price mt-8">$149</div>
+            <ul class="list mt-16">
+              <img src="img8.jpg" alt="" width="150" height="140" >
+              <img src="" alt="">
+              <li><span class="check">✔</span> HRV, VO₂ máx, GPS</li>
+              <li><span class="check">✔</span> Plan de 4 semanas</li>
+              <li><span class="check">✔</span> Reporte semanal</li>
+            </ul>
+            <a class="btn primary mt-16" href="#contacto">Lo quiero</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Prevención de lesiones -->
+<section id="prevencion">
+  <div class="container">
+    <h2 class="section-title">Prevención de Lesiones Deportivas</h2>
+    <p class="section-sub">Esguinces, desgarres y contracturas pueden reducirse con datos en tiempo real y hábitos adecuados.</p>
+     <div class="card">
+      <h3>Esguinces</h3>
+      <p>Ocurren por la distensión o ruptura de ligamentos. Son comunes en tobillo y rodilla. Factores de riesgo: superficies irregulares, mal calzado, fatiga.</p>
+      <p><strong>Prevención:</strong> ejercicios de equilibrio, fortalecimiento del core, calzado adecuado y smartwatches para detectar fatiga.</p>
+      <img src="img3.jpeg" alt=""  style="border-radius:14px; border:1px solid rgba(255,255,255,.12 width="350px" height="250px">
+    </div>
+
+    <div class="card">
+      <h3>Desgarres musculares</h3>
+      <p>Se producen cuando las fibras musculares se rompen por sobrecarga o esfuerzo brusco. Dolor intenso e incapacidad inmediata son síntomas típicos.</p>
+      <p><strong>Prevención:</strong> controlar cargas, hacer estiramientos, nutrición adecuada y monitoreo de frecuencia cardiaca.</p>
+      <img src="img4.jpg" alt=""width="350px" height="250px" style="border-radius:14px; border:1px solid rgba(255,255,255,.12>
+    </div>
+
+    <div class="card">
+      <h3>Contracturas musculares</h3>
+      <p>Contracción involuntaria y prolongada de fibras musculares. Suele aparecer en cuello, espalda y pantorrillas.</p>
+      <p><strong>Prevención:</strong> masajes de descarga, hidratación constante, descanso y monitoreo del estrés con wearables.</p>
+      <img src="img5.jpeg" alt=""width="350px" height="250px" style="border-radius:14px; border:1px solid rgba(255,255,255,.12>
+    </div>
+
+    <div class="card">
+      <h3>Consecuencias si no se tratan</h3>
+      <p>Las lesiones mal atendidas pueden derivar en cronicidad, limitaciones de movimiento, recaídas y pérdida de rendimiento deportivo.</p>
+      <img src="img6.jpg" width="350px" height="250px" style="border-radius:14px; border:1px solid rgba(255,255,255,.12>
+    </div>
+  </div>
+</section>
+<!-- ============================= -->
+<!-- Consecuencias de no tratar lesiones -->
+<!-- ============================= -->
+<section id="consecuencias" class="consecuencias-section" style="padding:60px 20px; background:#f9f9f9;">
+  <div class="container" style="max-width:1000px; margin:auto;">
+    <h2 style="text-align:center; font-size:2.2em; margin-bottom:30px; color:#f2eeee;">
+      ⚠️ Consecuencias de no tratar correctamente las lesiones
+    </h2>
+    
+    <!-- Consecuencia 1 -->
+    <div class="consecuencia-item" style="margin-bottom:25px;">
+      <h3 style="font-size:1.4em; color:#faf8f8;">1. Dolor crónico</h3>
+      <p style="font-size:1.05em; line-height:1.6; color:#8bfe5a;">
+        La inflamación no resuelta puede generar dolor constante,
+        limitando la movilidad y afectando la calidad de vida del deportista.
+      </p>
+    </div>
+
+    <!-- Consecuencia 2 -->
+    <div class="consecuencia-item" style="margin-bottom:25px;">
+      <h3 style="font-size:1.4em; color:#f5f3f2;">2. Inestabilidad articular</h3>
+      <p style="font-size:1.05em; line-height:1.6; color:#8bfe5a;">
+        Un esguince mal tratado puede dejar los ligamentos debilitados, 
+        aumentando el riesgo de nuevas torceduras y microlesiones repetitivas.
+      </p>
+    </div>
+
+    <!-- Consecuencia 3 -->
+    <div class="consecuencia-item" style="margin-bottom:25px;">
+      <h3 style="font-size:1.4em; color:#f5f2f1;">3. Pérdida de fuerza y movilidad</h3>
+      <p style="font-size:1.05em; line-height:1.6; color:#8bfe5a;">
+        La falta de tratamiento adecuado provoca atrofia muscular y rigidez articular, 
+        dificultando el retorno a la práctica deportiva y limitando la actividad diaria.
+      </p>
+    </div>
+
+    <!-- Consecuencia 4 -->
+    <div class="consecuencia-item" style="margin-bottom:25px;">
+      <h3 style="font-size:1.4em; color:#fdfefb;">4. Formación de lesiones secundarias</h3>
+      <p style="font-size:1.05em; line-height:1.6; color:#8bfe5a;">
+        Al compensar el movimiento de la zona afectada, otras articulaciones como la cadera, 
+        rodilla o columna reciben sobrecarga, lo que puede desencadenar tendinitis, bursitis 
+        o dolor lumbar crónico.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+    <div class="grid-2 mt-24">
+      <div class="card">
+        <h3>Factores de riesgo</h3>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> Superficie y calzado inadecuados</li>
+          <li><span class="check">✔</span> Falta de calentamiento e hidratación</li>
+          <li><span class="check">✔</span> Fatiga y sobreentrenamiento</li>
+          <li><span class="check">✔</span> Técnica deficiente</li>
+          <img src="img18.jpeg" alt="" width="250" height="200"  style="border-radius:12px; border:1px solid rgba(255,255,255,.08)" >
+        </ul>
+        <a class="btn soft mt-16" href="#guia" id="downloadGuide">Descargar guía (PDF)</a>
+      </div>
+      <div class="card">
+        <h3>Ejercicios preventivos</h3>
+        <p class="muted">Incluye propiocepción de tobillo, fortalecimiento de core y movilidad de cadera.</p>
+        <div class="grid-2 mt-16">
+          <img src="img2.jpg" alt="Ejercicio preventivo 1" style="border-radius:12px; border:1px solid rgba(255,255,255,.08)" width="350" height="200">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80&auto=format&fit=crop" alt="Ejercicio preventivo 2" style="border-radius:12px; border:1px solid rgba(255,255,255,.08)" width="350" height="200">
+        </div>
+        <a class="btn primary mt-16" href="#contacto">Reserva tu consulta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reducción de peso y medidas -->
+<section id="peso">
+  <div class="container">
+    <h2 class="section-title">Reducción de Peso y Medidas</h2>
+    <p class="section-sub">Transforma tu cuerpo con planes sostenibles: nutrición, ejercicio y seguimiento con smartwatch.</p>
+
+    <div class="pricing mt-24">
+      <div class="card">
+        <strong>Plan Esencial (4 semanas)</strong>
+        <div class="price mt-8">$59</div>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> Menús semanales</li>
+          <li><span class="check">✔</span> Rutina por nivel</li>
+          <li><span class="check">✔</span> Reporte semanal (peso, IMC, medidas)</li>
+          <img src="img9.jpeg" alt="" width="150" height="130">
+        </ul>
+        <a class="btn soft mt-16" href="#contacto">Me interesa</a>
+      </div>
+      <div class="card">
+        <strong>Plan + Smartwatch</strong>
+        <div class="price mt-8">$129</div>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> Todo lo del Esencial</li>
+          <li><span class="check">✔</span> Reloj con HR + pasos</li>
+          <li><span class="check">✔</span> Alertas de actividad y sueño</li>
+          <img src="img10.jpg" alt="" width="160" height="140">
+          <img src="img11.jpeg" alt="" width="170" height="140">
+        </ul>
+        <a class="btn primary mt-16" href="#contacto">Empieza hoy</a>
+      </div>
+      <div class="card">
+        <strong>VIP · Control Avanzado</strong>
+        <div class="price mt-8">$199</div>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> HRV, VO₂ máx, GPS</li>
+          <li><span class="check">✔</span> Acompañamiento 1:1</li>
+          <li><span class="check">✔</span> Informe quincenal con insights</li>
+          <img src="img12.jpg" alt="" width="160" height="140">
+          <img src="img13.jpg" alt="" width="160" height="140">
+        </ul>
+        <a class="btn primary mt-16" href="#contacto">Quiero resultados</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Big Data aplicada al deporte -->
+<section id="bigdata">
+  <div class="container">
+    <h2 class="section-title">Big Data aplicada al Deporte</h2>
+    <p class="section-sub">Extracción de datos (smartwatches, Google Fit y datos abiertos), limpieza en Excel/MongoDB/SPSS y análisis de patrones.</p>
+
+    <div class="grid-2 mt-24">
+      <div class="viz">
+        <h3>Patrones de lesiones (demo)</h3>
+        <p class="muted">Distribución estimada en fútbol amateur: esguinces, desgarres y contracturas.</p>
+        <canvas id="barChart" width="600" height="320" aria-label="Gráfico de barras"></canvas>
+      </div>
+      <div class="card">
+        <h3>Pipeline de datos</h3>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> <strong>Extracción:</strong> reloj, APIs, datos abiertos 2020–2025</li>
+          <li><span class="check">✔</span> <strong>Limpieza:</strong> normalización y manejo de valores faltantes</li>
+          <li><span class="check">✔</span> <strong>Almacenamiento:</strong> MongoDB (JSON)</li>
+          <li><span class="check">✔</span> <strong>Análisis:</strong> estadística descriptiva y correlacional</li>
+          <li><span class="check">✔</span> <strong>Visualización:</strong> panel con métricas clave</li>
+        </ul>
+        <div class="pills mt-16">
+          <span class="pill">Frecuencia cardiaca</span>
+          <span class="pill">Pasos / Cadencia</span>
+          <span class="pill">Sueño</span>
+          <span class="pill">Fatiga</span>
+          <span class="pill">Superficie</span>
+        </div>
+        <a class="btn soft mt-16" href="#resultados">Ver resultados de investigación</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonios -->
+<section id="testimonios">
+  <div class="container">
+    <h2 class="section-title">Testimonios y Casos de Éxito</h2>
+    <p class="section-sub">Lo que dicen deportistas y usuarios de nuestros planes.</p>
+
+    <div class="testi mt-24">
+      <div class="card">
+        <div class="stars">★★★★★</div>
+         <img src="img14.jpg" alt="" width="60" height="80">
+        <p class="quote mt-8">“Con mi reloj aprendí a controlar el esfuerzo y evité lesiones en el torneo barrial.”</p>
+        <div class="muted mt-8">— Diego A., fútbol amateur</div>
+      </div>
+      <div class="card">
+        <div class="stars">★★★★★</div>
+        <img src="img15.jpg" alt=""  width="60" height="80">
+        <p class="quote mt-8">“Bajé 6 cm de cintura con el programa Smart Control y dormí mejor.”</p>
+        <div class="muted mt-8">— Carolina V., running</div>
+      </div>
+      <div class="card">
+        <div class="stars">★★★★☆</div>
+        <img src="img16.jpg" alt="" width="60" height="80">
+        <p class="quote mt-8">“El análisis de mis datos me ayudó a entrenar más seguro después de una lesión.”</p>
+        <div class="muted mt-8">— Kevin M., baloncesto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section id="contacto">
+  <div class="container">
+    <h2 class="section-title">Contacto rápido</h2>
+    <p class="section-sub">¿Tienes dudas, quieres un pack o agendar consulta? Escríbenos y te respondemos hoy.</p>
+
+    <div class="grid-2 mt-24">
+      <form class="card" id="contactForm" novalidate>
+        <label>Nombre
+          <input type="text" name="name" placeholder="Tu nombre" required />
+        </label>
+        <label>Correo
+          <input type="email" name="email" placeholder="tucorreo@email.com" required />
+        </label>
+        <label>Mensaje
+          <textarea name="message" rows="5" placeholder="¿Qué necesitas?" required></textarea>
+        </label>
+        <button class="btn primary" type="submit">Enviar</button>
+        <small class="muted">Al enviar aceptas nuestras políticas de privacidad.</small>
+      </form>
+
+      <div class="card">
+        <h3>Atención</h3>
+        <p class="muted">WhatsApp, redes o correo. Horario 09h–18h.</p>
+        <ul class="list mt-16">
+          <li><span class="check">✔</span> <strong>WhatsApp:</strong> <a href="https://wa.me/593967764884" target="_blank" rel="noopener">+593 967764884</a></li>
+          <li><span class="check">✔</span> <strong>Instagram:</strong> @smarthealth360</li>
+          <li><span class="check">✔</span> <strong>Correo:</strong> contacto@smarthealth.ec</li>
+        </ul>
+        <div class="mt-16">
+          <h4>Créditos académicos</h4>
+          <p class="muted">Proyecto: Big Data aplicada a prevención de lesiones en Quito (Parque La Carolina).<br> Carrera: Big Data – 2do nivel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container center">
+    <div class="muted">© <span id="year"></span> Smart Health 360 · Proyecto académico – Big Data & Salud</div>
+    <div class="mt-8"><small>Especialista en fisioterapia dermato-funcional y podología · Políticas · Aviso legal</small></div>
+  </div>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/593967764884" target="_blank" rel="noopener" aria-label="WhatsApp">
+  🟢
+</a>
+
+<!-- Mobile menu drawer (simple) -->
+<div id="drawer" style="position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; z-index:70">
+  <nav style="position:absolute; right:0; top:0; width:78%; max-width:360px; height:100%; background:#0e1521; padding:18px; border-left:1px solid rgba(255,255,255,.08);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+      <strong>Menú</strong>
+      <button class="btn soft" id="closeMenu">✕</button>
+    </div>
+    <a class="btn soft" href="#relojes">Relojes</a>
+    <a class="btn soft mt-8" href="#prevencion">Prevención</a>
+    <a class="btn soft mt-8" href="#peso">Reducción de peso</a>
+    <a class="btn soft mt-8" href="#bigdata">Big Data</a>
+    <a class="btn soft mt-8" href="#testimonios">Testimonios</a>
+    <a class="btn soft mt-8" href="#contacto">Contacto</a>
+  </nav>
+</div>
+
+<script>
+  // Año en footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Drawer móvil
+  const drawer = document.getElementById('drawer');
+  document.getElementById('openMenu').addEventListener('click', ()=> drawer.style.display='block');
+  document.getElementById('closeMenu').addEventListener('click', ()=> drawer.style.display='none');
+  drawer.addEventListener('click', (e)=>{ if(e.target===drawer) drawer.style.display='none' });
+
+  // Contact form (demo)
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    if(!fd.get('name') || !fd.get('email') || !fd.get('message')){
+      alert('Por favor completa todos los campos.'); return;
+    }
+    alert('¡Gracias! Te contactaremos en breve por correo.');
+    e.target.reset();
+  });
+
+  // Descargar guía PDF (placeholder): crea un PDF mínimo en runtime
+  document.getElementById('downloadGuide').addEventListener('click', function(ev){
+    ev.preventDefault();
+    const content = `Guía rápida de prevención de lesiones\n\n• Calentamiento 8–12 min\n• Propiocepción de tobillo\n• Fuerza de core\n• Hidratación y descanso\n\nSmart Health 360`;
+    const blob = new Blob([content], {type:'text/plain'}); // para demo; puedes reemplazar con un PDF real
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'Guia-Prevencion-SmartHealth.txt';
+    a.click(); URL.revokeObjectURL(url);
+  });
+
+  // Bar chart simple sin librerías
+  (function(){
+    const data = [40, 20, 15]; // Esguinces, Desgarres, Contracturas (ejemplo)
+    const labels = ['Esguinces', 'Desgarres', 'Contracturas'];
+    const colors = ['#38bdf8', '#a78bfa', '#22c55e'];
+    const c = document.getElementById('barChart');
+    const ctx = c.getContext('2d');
+    const W = c.width, H = c.height;
+
+    // Fondo
+    ctx.fillStyle = 'rgba(255,255,255,0.03)';
+    ctx.fillRect(0,0,W,H);
+
+    const padding = 40;
+    const maxVal = Math.max(...data) * 1.2;
+    const barW = (W - padding*2) / data.length * 0.6;
+
+    // Ejes
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding, H - padding); ctx.lineTo(W - padding, H - padding); // x
+    ctx.moveTo(padding, H - padding); ctx.lineTo(padding, padding); // y
+    ctx.stroke();
+
+    // Grid y labels Y
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '12px Inter, sans-serif';
+    const steps = 4;
+    for(let i=1;i<=steps;i++){
+      const y = H - padding - (i*(H - padding*2)/steps);
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx.beginPath(); ctx.moveTo(padding, y); ctx.lineTo(W - padding, y); ctx.stroke();
+      const val = Math.round((i*maxVal/steps));
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText(val, 8, y+4);
+    }
+
+    // Barras
+    data.forEach((v, i)=>{
+      const x = padding + (i+0.2) * ((W - padding*2)/data.length);
+      const h = (v / maxVal) * (H - padding*2);
+      const y = H - padding - h;
+      ctx.fillStyle = colors[i];
+      ctx.fillRect(x, y, barW, h);
+
+      // Label X
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.textAlign = 'center';
+      ctx.fillText(labels[i], x + barW/2, H - padding + 16);
+
+      // Valor
+      ctx.font = 'bold 12px Inter, sans-serif';
+      ctx.fillText(v + '%', x + barW/2, y - 8);
+    });
+  })();
+</script>
+</body>
+</html>
